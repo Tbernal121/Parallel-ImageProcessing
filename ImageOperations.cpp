@@ -121,17 +121,18 @@ void escalado(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& result
 
 
 void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double angulo){
-    llevarCuadrante1(imagen, resultado);
-    //centrarImagen(imagen, resultado);
+    vector<vector<Pixel>> resultadoT = resultado;
+    llevarCuadrante1(imagen, resultadoT);
+
     double radianes = angulo * 3.1416 / 180;
     vector<vector<double>> R = {
         {cos(radianes), sin(radianes), 0},
         {-sin(radianes), cos(radianes), 0},
-        {0, 0, 1}
+        {0,              0,              1}
     };
 
-    for (double i = 0; i < imagen.size(); ++i) {
-        for (double j = 0; j < imagen[0].size(); ++j) {
+    for (double i = 0; i < resultado.size(); ++i) {
+        for (double j = 0; j < resultado[0].size(); ++j) {
             vector<vector<double>> punto = {
                 {j},
                 {i},
@@ -145,7 +146,7 @@ void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &
             int y = puntoRotado[1][0];
 
             if (x >= 0 && x < resultado[0].size() && y >= 0 && y < resultado.size()) {
-                resultado[y][x] = imagen[i][j];
+                resultado[y][x] = resultadoT[i][j];
             }
         }
     }
@@ -153,7 +154,8 @@ void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &
 }
 
 void cizallamientoX (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double shx){
-    double X = tan(shx);
+    double radianes = shx * 3.1416 / 180;
+    double X = tan(radianes);
     vector<vector<double>> S = {
         {1, X, 0},
         {0, 1, 0},
@@ -182,7 +184,8 @@ void cizallamientoX (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
 }
 
 void cizallamientoY (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double shy){
-    double Y = tan(shy);
+    double radianes = shy * 3.1416 / 180;
+    double Y = tan(radianes);
     vector<vector<double>> S = {
         {1, 0, 0},
         {Y, 1, 0},
