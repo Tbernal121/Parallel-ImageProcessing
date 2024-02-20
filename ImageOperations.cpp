@@ -52,50 +52,6 @@ void traslacion(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& resu
     }
 }
 
-/*
-Pixel mezclaColores(const Pixel& p1, const Pixel& p2, const Pixel& p3, const Pixel& p4) {
-    unsigned char red = (p1.red + p2.red + p3.red + p4.red) / 4;
-    unsigned char green = (p1.green + p2.green + p3.green + p4.green) / 4;
-    unsigned char blue = (p1.blue + p2.blue + p3.blue + p4.blue) / 4;
-    return Pixel{blue, green, red};
-}
-
-void escalado(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& resultado, double sx, double sy) {
-    vector<vector<double>> S = {
-        {sx, 0, 0},
-        {0, sy, 0},
-        {0, 0, 1}
-    };
-
-    for (double i = 0; i < imagen.size(); ++i) {
-        for (double j = 0; j < imagen[0].size(); ++j) {
-            vector<vector<double>> punto = {
-                {j},
-                {i},
-                {1}
-            };
-            vector<vector<double>> puntoEscalado(3, vector<double>(1, 0));
-
-            matrixMultiply_Secuencial(S, punto, puntoEscalado);
-
-            int x = puntoEscalado[0][0];
-            int y = puntoEscalado[1][0];
-
-            if (x >= 0 && x < resultado[0].size() && y >= 0 && y < resultado.size()) {
-                if (resultado[y][x].blue == 0 && resultado[y][x].green == 0 && resultado[y][x].red == 0) { // Verifica si el pixel es negro
-                    if (i > 0 && j > 0 && i < imagen.size() - 1 && j < imagen[0].size() - 1) {
-                        resultado[y][x] = mezclaColores(imagen[i-1][j], imagen[i+1][j], imagen[i][j-1], imagen[i][j+1]);
-                    }
-                } else {
-                    resultado[y][x] = imagen[i][j];
-                }
-            }
-        }
-    }
-}
-*/
-
-
 void escalado(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& resultado, double sx, double sy) {
     int ancho = imagen[0].size();
     int alto = imagen.size();
@@ -121,18 +77,15 @@ void escalado(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& result
 
 
 void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double angulo){
-    vector<vector<Pixel>> resultadoT = resultado;
-    llevarCuadrante1(imagen, resultadoT);
-
     double radianes = angulo * 3.1416 / 180;
     vector<vector<double>> R = {
         {cos(radianes), sin(radianes), 0},
         {-sin(radianes), cos(radianes), 0},
-        {0,              0,              1}
+        {0, 0, 1}
     };
 
-    for (double i = 0; i < resultado.size(); ++i) {
-        for (double j = 0; j < resultado[0].size(); ++j) {
+    for (double i = 0; i < imagen.size(); ++i) {
+        for (double j = 0; j < imagen[0].size(); ++j) {
             vector<vector<double>> punto = {
                 {j},
                 {i},
@@ -145,17 +98,15 @@ void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &
             int x = puntoRotado[0][0];
             int y = puntoRotado[1][0];
 
-            if (x >= 0 && x < resultado[0].size() && y >= 0 && y < resultado.size()) {
-                resultado[y][x] = resultadoT[i][j];
-            }
+            resultado[y+500][x+500] = imagen[i][j];
+            
         }
     }
     
 }
 
 void cizallamientoX (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double shx){
-    double radianes = shx * 3.1416 / 180;
-    double X = tan(radianes);
+    double X = tan(shx);
     vector<vector<double>> S = {
         {1, X, 0},
         {0, 1, 0},
@@ -184,8 +135,7 @@ void cizallamientoX (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
 }
 
 void cizallamientoY (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double shy){
-    double radianes = shy * 3.1416 / 180;
-    double Y = tan(radianes);
+    double Y = tan(shy);
     vector<vector<double>> S = {
         {1, 0, 0},
         {Y, 1, 0},
