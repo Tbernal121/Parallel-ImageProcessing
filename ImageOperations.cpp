@@ -17,11 +17,12 @@ void matrixMultiply_Secuencial(const vector<vector<double>>& A, const vector<vec
     }
 }
 
-void centrarImagen(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& resultado) {
-    double dx = resultado[0].size() / 2 - imagen[0].size() / 2;
-    double dy = resultado.size() / 2 - imagen.size() / 2;
-    traslacion(imagen, resultado, dx, dy);
+void llevarCuadrante1(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& resultado) {
+    int ancho = resultado[0].size()/2;
+    int alto = resultado.size()/2;
+    traslacion(imagen, resultado, ancho, alto);
 }
+
 
 void traslacion(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& resultado, double dx, double dy) {
     vector<vector<double>> T = {
@@ -120,6 +121,7 @@ void escalado(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& result
 
 
 void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double angulo){
+    llevarCuadrante1(imagen, resultado);
     //centrarImagen(imagen, resultado);
     double radianes = angulo * 3.1416 / 180;
     vector<vector<double>> R = {

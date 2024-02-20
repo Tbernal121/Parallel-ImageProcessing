@@ -14,4 +14,5 @@ void cizallamientoY (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
 void reflexionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado);
 void reflexionX(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado);
 void reflexionY(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado);
+void llevarCuadrante1(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& resultado);
 void matrixMultiply_Secuencial(const vector<vector<double>>& A, const vector<vector<double>>& B, vector<vector<double>>& resultado);

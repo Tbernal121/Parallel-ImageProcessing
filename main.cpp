@@ -29,10 +29,10 @@ int main(int argc, char* argv[]) {
     switch(opcion){
         case 1:
             cout<<"Ingrese el valor de traslacion en X: ";
-            int tx;
+            double tx;
             cin>>tx;
             cout<<"Ingrese el valor de traslacion en Y: ";
-            int ty;
+            double ty;
             cin>>ty;
             traslacion(imagen, resultado, tx, ty);  // Aplica la traslación
             break;
@@ -48,19 +48,19 @@ int main(int argc, char* argv[]) {
             break;
         case 3:
             cout<<"Ingrese el valor del angulo de rotacion: ";
-            int angulo;
+            double angulo;
             cin>>angulo;
             rotacionOrigen(imagen, resultado, angulo);  // Aplica la rotación
             break;
         case 4:
             cout<<"Ingrese el valor de cizallamiento en X: ";
-            int cx;
+            double cx;
             cin>>cx;
             cizallamientoX(imagen, resultado, cx);  // Aplica el cizallamiento en X
             break;
         case 5:
             cout<<"Ingrese el valor de cizallamiento en Y: ";
-            int cy;
+            double cy;
             cin>>cy;
             cizallamientoY(imagen, resultado, cy);  // Aplica el cizallamiento en Y
             break;
@@ -72,6 +72,9 @@ int main(int argc, char* argv[]) {
             break;
         case 8:
             reflexionY(imagen, resultado);  // Aplica la reflexión en Y
+            break;
+        case 9:
+            llevarCuadrante1(imagen, resultado);
             break;
         default:
             cout<<"Opcion no valida\n";
