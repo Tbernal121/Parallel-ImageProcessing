@@ -77,6 +77,8 @@ void escalado(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& result
 
 
 void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double angulo){
+    int dy = resultado.size()/2;
+    int dx = resultado[0].size()/2;
     double radianes = angulo * 3.1416 / 180;
     vector<vector<double>> R = {
         {cos(radianes), sin(radianes), 0},
@@ -92,21 +94,18 @@ void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &
                 {1}
             };
             vector<vector<double>> puntoRotado(3.0, vector<double>(1, 0));
-
             matrixMultiply_Secuencial(R, punto, puntoRotado);
-
             int x = puntoRotado[0][0];
             int y = puntoRotado[1][0];
-
-            resultado[y+500][x+500] = imagen[i][j];
-            
+            resultado[y+dy][x+dx] = imagen[i][j];
         }
     }
     
 }
 
 void cizallamientoX (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double shx){
-    double X = tan(shx);
+    double radianes = shx * 3.1416 / 180;
+    double X = tan(radianes);
     vector<vector<double>> S = {
         {1, X, 0},
         {0, 1, 0},
@@ -121,9 +120,7 @@ void cizallamientoX (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
                 {1}
             };
             vector<vector<double>> puntoCizallado(3, vector<double>(1, 0));
-
             matrixMultiply_Secuencial(S, punto, puntoCizallado);
-
             int x = puntoCizallado[0][0];
             int y = puntoCizallado[1][0];
 
@@ -135,7 +132,8 @@ void cizallamientoX (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
 }
 
 void cizallamientoY (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double shy){
-    double Y = tan(shy);
+    double radianes = shy * 3.1416 / 180;
+    double Y = tan(radianes);
     vector<vector<double>> S = {
         {1, 0, 0},
         {Y, 1, 0},
@@ -164,6 +162,8 @@ void cizallamientoY (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
 }
 
 void reflexionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado){
+    int dy = resultado.size()/2;
+    int dx = resultado[0].size()/2;
     vector<vector<double>> R = {
             {-1, 0, 0},
             {0, -1, 0},
@@ -183,15 +183,14 @@ void reflexionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
 
             int x = puntoReflejado[0][0];
             int y = puntoReflejado[1][0];
-
-            if (x >= 0 && x < resultado[0].size() && y >= 0 && y < resultado.size()) {
-                resultado[y][x] = imagen[i][j];
-            }
+            resultado[y+dy][x+dx] = imagen[i][j];
         }
     }
 }
 
 void reflexionX(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado){
+    int dy = resultado.size()/2;
+    int dx = resultado[0].size()/2;
     vector<vector<double>> R = {
             {1, 0, 0},
             {0, -1, 0},
@@ -211,15 +210,14 @@ void reflexionX(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resu
 
             int x = puntoReflejado[0][0];
             int y = puntoReflejado[1][0];
-
-            if (x >= 0 && x < resultado[0].size() && y >= 0 && y < resultado.size()) {
-                resultado[y][x] = imagen[i][j];
-            }
+            resultado[y+dy][x+dx] = imagen[i][j];
         }
     }
 }
 
 void reflexionY(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado){
+    int dy = resultado.size()/2;
+    int dx = resultado[0].size()/2;
     vector<vector<double>> R = {
             {-1, 0, 0},
             {0, 1, 0},
@@ -239,10 +237,7 @@ void reflexionY(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resu
 
             int x = puntoReflejado[0][0];
             int y = puntoReflejado[1][0];
-
-            if (x >= 0 && x < resultado[0].size() && y >= 0 && y < resultado.size()) {
-                resultado[y][x] = imagen[i][j];
-            }
+            resultado[y+dy][x+dx] = imagen[i][j];
         }
     }
 }
