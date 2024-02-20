@@ -10,7 +10,6 @@ int main(int argc, char* argv[]) {
         std::cerr << "Uso: " << argv[0] << " <nombre_del_archivo.bmp>" << std::endl;
         return 1;
     }
-
     vector<vector<Pixel>> imagen = leerArchivoBMP(argv[1]);
     vector<vector<Pixel>> resultado(1000, vector<Pixel>(1000));  // Ajustar el tamaño según sea necesario
     cout<<"Escoge una opcion: \n";
@@ -22,10 +21,8 @@ int main(int argc, char* argv[]) {
     cout<<"6.- Reflexion en el origen\n";
     cout<<"7.- Reflexion en X\n";
     cout<<"8.- Reflexion en Y\n";
-
     int opcion;
     cin>>opcion;
-
     switch(opcion){
         case 1:
             cout<<"Ingrese el valor de traslacion en X: ";
@@ -73,21 +70,16 @@ int main(int argc, char* argv[]) {
         case 8:
             reflexionY(imagen, resultado);  // Aplica la reflexión en Y
             break;
-        case 9:
-            llevarCuadrante1(imagen, resultado);
-            break;
         default:
             cout<<"Opcion no valida\n";
             break;
     }
-
     cout<<"Escoja el nombre de la imagen resultante\n";
     string nombre;
     cin>>nombre;
     nombre = nombre + ".bmp";
     const char* nombree = nombre.c_str();
     guardarArchivoBMP(nombree, resultado);
-
     return 0;
 }
 
