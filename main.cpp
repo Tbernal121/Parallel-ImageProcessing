@@ -13,10 +13,13 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     vector<vector<Pixel>> imagen = leerArchivoBMP(argv[1]);
+
+
     int opcion;
 
     do {
-        vector<vector<Pixel>> resultado(1000, vector<Pixel>(1000));  // Ajustar el tamaño según sea necesario
+        //vector<vector<Pixel>> resultado(1000, vector<Pixel>(1000));  // Ajustar el tamaño según sea necesario
+        vector<vector<Pixel>> resultado;
         cout<<"Escoge una opcion: \n";
         cout<<"1.- Traslacion\n";
         cout<<"2.- Escalado\n";
@@ -34,7 +37,7 @@ int main(int argc, char* argv[]) {
             cout << "Opcion no valida\n" << endl;
             continue;
         }
-        switch(opcion){
+        switch(opcion){   
             case 1:
                 cout<<"Ingrese el valor de traslacion en X: ";
                 double tx;
