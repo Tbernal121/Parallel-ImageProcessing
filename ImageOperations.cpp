@@ -75,17 +75,14 @@ void escalado(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& result
 }
 
 void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado, double angulo){
-    int ancho = imagen[0].size();
-    int alto = imagen.size();
+    double alto = imagen.size();
+    double ancho = imagen[0].size();
+    double hipotenusa = sqrt(pow(alto, 2) + pow(ancho, 2));
 
-    // Calcular el tamaño del marco después de la rotación
     double radianes = angulo * 3.1416 / 180;
-    double diagonal = sqrt(ancho * ancho + alto * alto);
-    int nuevoAncho = abs(diagonal * cos(radianes));
-    int nuevoAlto = abs(diagonal * sin(radianes));
 
     // Redimensionar la matriz resultado para que tenga el nuevo tamaño
-    resultado.resize(nuevoAlto, vector<Pixel>(nuevoAncho, Pixel())); // Pixel() es un pixel vacío
+    resultado.resize(hipotenusa*2, vector<Pixel>(hipotenusa*2, Pixel())); // Pixel() es un pixel vacío
 
     int dy = resultado.size()/2;
     int dx = resultado[0].size()/2;
@@ -106,9 +103,7 @@ void rotacionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &
             matrixMultiply_Secuencial(R, punto, puntoRotado);
             int x = puntoRotado[0][0];
             int y = puntoRotado[1][0];
-            if (y+dy >= 0 && y+dy < nuevoAlto && x+dx >= 0 && x+dx < nuevoAncho) {
-                resultado[y+dy][x+dx] = imagen[i][j];
-            }
+            resultado[y+dy][x+dx] = imagen[i][j];
         }
     }
 }
@@ -123,6 +118,13 @@ void cizallamientoX (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
         {0, 1, 0},
         {0, 0, 1}
     };
+
+    // Calcular las nuevas dimensiones
+    int nuevaAltura = imagen.size();
+    int nuevaAnchura = imagen[0].size() + abs(X) * imagen.size();
+
+    // Redimensionar la matriz resultado
+    resultado.resize(nuevaAltura, vector<Pixel>(nuevaAnchura));
 
     for (double i = 0; i < imagen.size(); ++i) {
         for (double j = 0; j < imagen[0].size(); ++j) {
@@ -152,6 +154,13 @@ void cizallamientoY (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
         {0, 0, 1}
     };
 
+    // Calcular las nuevas dimensiones
+    int nuevaAltura = imagen.size() + abs(Y) * imagen[0].size();
+    int nuevaAnchura = imagen[0].size();
+    
+    // Redimensionar la matriz resultado
+    resultado.resize(nuevaAltura, vector<Pixel>(nuevaAnchura));
+
     for (double i = 0; i < imagen.size(); ++i) {
         for (double j = 0; j < imagen[0].size(); ++j) {
             vector<vector<double>> punto = {
@@ -174,8 +183,13 @@ void cizallamientoY (const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
 }
 
 void reflexionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> &resultado){
-    int dy = resultado.size()/2;
-    int dx = resultado[0].size()/2;
+    // Calcular las nuevas dimensiones
+    int nuevaAltura = imagen.size();
+    int nuevaAnchura = imagen[0].size();
+
+    // Redimensionar la matriz resultado
+    resultado.resize(nuevaAltura, vector<Pixel>(nuevaAnchura));
+
     vector<vector<double>> R = {
             {-1, 0, 0},
             {0, -1, 0},
@@ -193,9 +207,12 @@ void reflexionOrigen(const vector<vector<Pixel>> &imagen, vector<vector<Pixel>> 
 
             matrixMultiply_Secuencial(R, punto, puntoReflejado);
 
-            int x = puntoReflejado[0][0];
-            int y = puntoReflejado[1][0];
-            resultado[y+dy][x+dx] = imagen[i][j];
+            int x = puntoReflejado[0][0] + nuevaAnchura / 2;
+            int y = puntoReflejado[1][0] + nuevaAltura / 2;
+
+            if (x >= 0 && x < resultado[0].size() && y >= 0 && y < resultado.size()) {
+                resultado[y][x] = imagen[i][j];
+            }
         }
     }
 }
