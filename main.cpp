@@ -2,6 +2,7 @@
 #include "BMPFileHandler.h"
 #include "ImageOperations.h"
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -11,7 +12,12 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     vector<vector<Pixel>> imagen = leerArchivoBMP(argv[1]);
-    vector<vector<Pixel>> resultado(1000, vector<Pixel>(1000));  // Ajustar el tamaño según sea necesario
+    double a = imagen.size();
+    double b = imagen[0].size();
+    double c1 = sqrt(pow(a, 2) + pow(b, 2));
+    double c = c1*2;
+    
+    vector<vector<Pixel>> resultado(c, vector<Pixel>(c));  // Ajustar el tamaño según sea necesario
     cout<<"Escoge una opcion: \n";
     cout<<"1.- Traslacion\n";
     cout<<"2.- Escalado\n";
