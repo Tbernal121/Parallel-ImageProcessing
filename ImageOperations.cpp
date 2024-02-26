@@ -20,6 +20,7 @@ void matrixMultiply_Secuencial(const vector<vector<double>>& A, const vector<vec
 void traslacion(const vector<vector<Pixel>>& imagen, vector<vector<Pixel>>& resultado, double dx, double dy) {
     int ancho = imagen[0].size();
     int alto = imagen.size();
+    cout<<"Translacion secuencial\n"<<endl;
 
     // Redimensionar la matriz resultado
     resultado.resize(alto+dy, vector<Pixel>(ancho+dx));
